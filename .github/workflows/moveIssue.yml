@@ -9,7 +9,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./move-issue.js
+        working-directory: move-issue.js
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
