@@ -15,13 +15,13 @@ async function moveIssueToProject() {
     const { data: issue } = await octokit.issues.get({
       owner: process.env.GITHUB_REPOSITORY_OWNER,
       repo: process.env.GITHUB_REPOSITORY,
-      issue_number: issueNumber,
+      issue_number: context.payload.issue.number,
     });
 
     const milestone = issue.milestone;
     if (milestone && milestone.title === milestoneTitle) {
       // Move the issue to the target project
-      await octokit.projects.createCard({
+      await octokit.rest.projects.createCard({
         column_id: toProjectId,
         content_type: "Issue",
         content_id: issueNumber,
@@ -44,5 +44,7 @@ async function moveIssueToProject() {
   }
 }
 
-moveIssueToProject().then(console.log("issuemoved!!")).catch(console.log("ENDERROR"));
+moveIssueToProject()
+.then((value) => {console.log("issuemoved!! " + value)})
+.catch((error) => console.log("ENDERROR: " + error));
 
