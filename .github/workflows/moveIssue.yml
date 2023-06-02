@@ -6,15 +6,24 @@ on:
 jobs:
   move-issue:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./path/to/js/file
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run JavaScript file
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: node move-issue.js
+
+      - name: Run JavaScript file
+        run: |
+          npm install
+          node move-issue.js
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
+
 
