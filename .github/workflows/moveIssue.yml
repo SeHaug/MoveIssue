@@ -1,15 +1,12 @@
 name: Move Issue to Another Project
 on:
   issues:
-    types: [milestoned]
+    types:
+      - milestoned
 
 jobs:
   move-issue:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: move-issue.js
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -19,11 +16,12 @@ jobs:
         with:
           node-version: 14
 
-      - name: Run JavaScript file
-        run: |
-          npm install
-          node move-issue.js
+      - name: Move Issue
         env:
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GITHUB_TOKEN: ${{ secrets.SEHA_TOKEN }}
+          FROM_PROJECT_ID: ${{ secrets.FROM_PROJECT_ID }}
+          TO_PROJECT_ID: ${{ secrets.TO_PROJECT_ID }}
+        run: node move-issue.js
+
 
 

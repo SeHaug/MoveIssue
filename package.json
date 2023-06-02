@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/SEHAINVIXO/MoveIssue/issues"
   },
-  "homepage": "https://github.com/SEHAINVIXO/MoveIssue#readme"
+  "homepage": "https://github.com/SEHAINVIXO/MoveIssue#readme",
+  "dependencies": {
+    "@octokit/rest": "^19.0.11"
+  }
 }

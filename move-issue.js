@@ -1,34 +1,30 @@
-
-import { Octokit } from "@octokit/rest";
-import { myToken } from "./pat";
+const { Octokit } = require("@octokit/rest");
 
 async function moveIssueToProject() {
   const octokit = new Octokit({
-    auth: `${myToken}`,
+    auth: process.env.GITHUB_TOKEN,
   });
 
-  const issueNumber = process.env.ISSUE_NUMBER;
-  const fromProjectId = "3";
-  const toProjectId = "2";
-  const milestoneTitle = "operations";
+  const issueNumber = process.env.GITHUB_EVENT.issue.number;
+  const fromProjectId = process.env.FROM_PROJECT_ID;
+  const toProjectId = process.env.TO_PROJECT_ID;
+  const milestoneTitle = "TARGET_MILESTONE_TITLE";
 
   try {
-    // Get the current issue
+    // Get the issue details
     const { data: issue } = await octokit.issues.get({
-      owner: "SEHAINVIXO",
-      repo: "MoveIssue",
+      owner: process.env.GITHUB_REPOSITORY_OWNER,
+      repo: process.env.GITHUB_REPOSITORY,
       issue_number: issueNumber,
     });
 
     const milestone = issue.milestone;
     if (milestone && milestone.title === milestoneTitle) {
-      const issueId = issue.id;
-
       // Move the issue to the target project
       await octokit.projects.createCard({
         column_id: toProjectId,
         content_type: "Issue",
-        content_id: issueId,
+        content_id: issueNumber,
       });
 
       // Remove the issue from the current project
@@ -49,3 +45,4 @@ async function moveIssueToProject() {
 }
 
 moveIssueToProject();
+
