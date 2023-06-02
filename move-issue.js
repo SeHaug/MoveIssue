@@ -44,5 +44,5 @@ async function moveIssueToProject() {
   }
 }
 
-moveIssueToProject().then(console.log("issuemoved!!")).catch(error);
+moveIssueToProject().then(console.log("issuemoved!!")).catch(console.log("ENDERROR"));
 
