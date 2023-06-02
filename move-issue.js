@@ -1,4 +1,4 @@
-const { Octokit } = require("@octokit/rest");
+import { Octokit } from "@octokit/rest";
 
 async function moveIssueToProject() {
   const octokit = new Octokit({
@@ -8,7 +8,7 @@ async function moveIssueToProject() {
   const issueNumber = process.env.GITHUB_EVENT.issue.number;
   const fromProjectId = process.env.FROM_PROJECT_ID;
   const toProjectId = process.env.TO_PROJECT_ID;
-  const milestoneTitle = "TARGET_MILESTONE_TITLE";
+  const milestoneTitle = "operations";
 
   try {
     // Get the issue details
