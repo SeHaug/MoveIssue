@@ -17,7 +17,7 @@ async function moveIssueToProject() {
       repo: process.env.GITHUB_REPOSITORY,
       issue_number: context.payload.issue.number,
     });
-
+    console.log("got the issue details")
     const milestone = issue.milestone;
     if (milestone && milestone.title === milestoneTitle) {
       // Move the issue to the target project
@@ -26,7 +26,7 @@ async function moveIssueToProject() {
         content_type: "Issue",
         content_id: issueNumber,
       });
-
+      console.log("moved the issue to target")
       // Remove the issue from the current project
       const cardId = issue.project_card?.id;
       if (cardId) {
@@ -34,7 +34,6 @@ async function moveIssueToProject() {
           card_id: cardId,
         });
       }
-
       console.log("Issue moved to the target project successfully.");
     } else {
       console.log("Issue does not have the target milestone. Skipping move to another project.");
