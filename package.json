@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/SEHAINVIXO/MoveIssue#readme",
   "dependencies": {
+    "@octokit/graphql": "^5.0.6",
     "@octokit/rest": "^19.0.11"
   }
 }
